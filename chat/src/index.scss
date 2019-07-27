@@ -6,6 +6,7 @@ $primary_sand: #b1a296;
 $primary_gray: #5d5c61;
 $background_darkgray_transparent: rgba(50, 50, 50, 0.5);
 $background_lightgray_transparent: rgba(100, 100, 100, 0.5);
+$topbar_height: 10vh;
 
 /* SASS Superclasses */
 
@@ -110,19 +111,24 @@ content {
 
 #messaging-wrapper {
   @extend .flex-centered-col;
-  @extend .max-size;
+  flex: 1;
+  margin-top: $topbar_height;
   transition: 0.5s ease-in-out;
   position: relative;
 }
 
 #message-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
   background-color: rgba(255, 255, 255, 0.7);
-  height: 7vh;
+  height: $topbar_height;
   width: 100%;
+  transition: 0.5s ease-in-out;
+  overflow: hidden;
 }
 
 #add-member {
-  position: absolute;
   top: 5px;
   right: 10px;
   font-size: 30px;
@@ -140,11 +146,17 @@ content {
 
 /* MessageSendingForm */
 
+#message-sending-form {
+  @extend .flex-centered;
+  width: 100%;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
+}
+
 #message-sender {
   border-radius: 25px;
-  border-right-style: hidden;
-  border-top-style: hidden;
-  border-left-style: hidden;
+  border: hidden;
   font-size: 15px;
   padding: 5px 10px;
   margin: 15px;
@@ -155,13 +167,6 @@ content {
     outline: none;
     box-shadow: 0px 5px 5px gray;
   }
-}
-
-#message-sending-form {
-  @extend .flex-centered;
-  width: 100%;
-  justify-content: flex-end;
-  position: relative;
 }
 
 #send {
@@ -189,7 +194,7 @@ content {
 .register-wrapper {
     @extend .flex-centered-col;
     @extend .max-size;
-    background-color: $primary_lightblue;
+    background-color: $primary_grayblue;
 }
 
 .login-wrapper {
@@ -253,6 +258,7 @@ content {
 }
 
 .user-icon {
+  position: absolute;
   border-radius: 100%;
   left: -35px;
   top: 0;
@@ -267,6 +273,15 @@ content {
   &:hover {
     box-shadow: 0px 0px 5px gray;
   }
+}
+
+.user-icon-big {
+  @extend .user-icon;
+  position: static;
+  font-size: 80px; 
+  width: 100px;
+  height: 100px;
+  cursor: none;
 }
 
 .name {
@@ -294,7 +309,8 @@ content {
   flex-flow: row;
   justify-content: flex-start;
   position: fixed;
-  max-height: 5vh;
+  min-height: 5vh;
+  height: fit-content;
   transition: 0.3s ease-in-out;
   top: 0;
   left: 0;
@@ -305,7 +321,7 @@ content {
 .error {
   width: fit-content;
   height: fit-content;
-  color: red;
+  color: white;
   text-align: center;
   margin-bottom: 10px;
 }
@@ -313,7 +329,7 @@ content {
 #close-error {
   position: absolute;
   top: 0;
-  right: 5px;
+  right: 20px;
   font-size: 30px;
   font-weight: bold;
   cursor: pointer;
@@ -321,16 +337,11 @@ content {
 
 /* RoomInfo */
 
-.box-links {
-  display: flex;
-  flex-flow: column;
-}
-
 #room-info-wrapper {
   @extend .flex-centered-col;
   width: 100%;
   justify-content: flex-start;
-  background-color: $primary_sand;
+  background-color: $primary_lightblue;
   transition: 1s ease-in-out;
   padding-top: 60px;
   z-index: 1;
@@ -343,7 +354,7 @@ content {
   font-size: 40px;
   font-weight: bold;
   position: absolute;
-  right: 5px;
+  right: 20px;
   top: 5px;
   transition: 1s ease-in-out;
   opacity: 1;
@@ -361,10 +372,16 @@ content {
 #room-list {
   @extend .flex-centered-col;
   justify-content: flex-start;
-  background-color: $primary_sand;
-  transition: 0.5s;
+  background-color: $primary_lightblue;
+  transition: 1s ease-in-out;
   overflow: hidden;
   position: relative;
+}
+
+.box-links {
+  display: flex;
+  flex-flow: column;
+  width: 70%;
 }
 
 .room-list-item {
@@ -373,9 +390,10 @@ content {
   text-align: center;
   overflow-x: hidden;
   padding: 15px;
-  margin: 15px;
+  margin: 30px;
   transition: 0.5s;
   border-radius: 5px;
+  background-color: lightgray;
   &:hover {
     background-color: gray;
     cursor: pointer;
@@ -386,7 +404,7 @@ content {
   font-size: 40px;
   font-weight: bold;
   position: absolute;
-  left: 5px;
+  left: 20px;
   top: 5px;
   transition: 1s ease;
   cursor: pointer;

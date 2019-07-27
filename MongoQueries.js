@@ -7,10 +7,14 @@ const Room = MongoSchemas.Room;
 const authenticateUser = async (username, password) => {
   let result;
   await User.findOne({ username })
+    .select('password id')
     .then(data => {
       if (data && bcrypt.compareSync(password, data.password)) {
         console.log("Authentication successful!".green);
         result = { userID: data.id };
+      } else {
+        console.error('Authentication failed'.red);
+        result = data ? { badPassword: true } : { noUser: true };
       }
     })
     .catch(err =>
@@ -43,12 +47,7 @@ const createUser = async (username, password) => {
       password: bcrypt.hashSync(password, 10),
       id,
       phoneNumber,
-      rooms: [
-        {
-          id: firstRoom.id,
-          name: firstRoom.name
-        }
-      ],
+      rooms: [{ id: firstRoom.id, name: firstRoom.name }],
       lastRoomID: firstRoom.id
     });
   await newUser
@@ -68,8 +67,10 @@ const genPhoneNumber = async () => {
 
   while (!uniqueNumber) {
     (result = ""), (uniqueNumber = true);
-    for (let i = 0; i < 10; i++)
+    for (let i = 0; i < 10; i++) {
       result += nums[Math.floor(Math.random() * nums.length)];
+      if (i === 2 || i === 5) result += '-'
+    }
     allNumbers.forEach(number => {
       if (number === result) uniqueNumber = false;
     });

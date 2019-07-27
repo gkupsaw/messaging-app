@@ -22,10 +22,10 @@ export default class RoomInfo extends Component {
         members.unshift(<div key='0' className='room-list-item'>Members:</div>);
         return (
             <div id='room-info-wrapper' style={{ width: this.props.visible ? '100%' : 0 }}>
-                <AddMember socket={this.socket} />
                 <div id='close-room-info' className='fas fa-arrow-circle-left'
                     onClick={this.props.close} />
                 <div className='box-links'>{members}</div>
+                <AddMember addMember={this.props.addMember} />
             </div>
         );
     }

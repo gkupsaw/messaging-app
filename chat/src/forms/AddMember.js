@@ -11,10 +11,7 @@ export default class AddMember extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        console.log('Adding member...');
-        const { socket } = this.props,
-              { phoneNumber } = this.state;
-        socket.emit('addMember', phoneNumber);
+        this.props.addMember(this.state.phoneNumber);
         this.setState({ phoneNumber: '' });
     }
 
